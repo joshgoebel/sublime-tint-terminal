@@ -1,0 +1,35 @@
+[
+    {
+        "keys": ["up"],
+        "command": "tw_up_cursor",
+        "context": [
+            { "key": "setting.terminal_window", "operator": "equal", "operand": true }
+            ]
+
+    },
+    {
+        "keys": ["down"],
+        "command": "tw_down_cursor",
+        "context": [
+            { "key": "setting.terminal_window", "operator": "equal", "operand": true }
+            ]
+
+    },
+
+    {
+        "keys": ["super+k"],
+        "command": "tw_clear",
+        "context": [
+            { "key": "setting.terminal_window", "operator": "equal", "operand": true }
+            ]
+
+    },
+    {
+        "keys": ["enter"],
+        "command": "tw_run_line",
+        "context": [
+            { "key": "setting.terminal_window", "operator": "equal", "operand": true }
+            // { "key": "setting.git_savvy.inline_diff_view", "operator": "equal", "operand": true }
+        ]
+    }
+]
