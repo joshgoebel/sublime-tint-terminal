@@ -32,12 +32,12 @@ To hide this introduction edit the Tint settings and set
 """
 
 
-class TerminalInTabCommand(sublime_plugin.WindowCommand):
+class TintNewTerminalCommand(sublime_plugin.WindowCommand):
 
     def run(self, cmd=None):
         view = self.window.new_file()
         view.set_name(PLUGIN_NAME)
-        view.settings().set("terminal_window", True)
+        view.settings().set("tint.terminal", True)
         view.settings().set("line_numbers", False)
         # view.settings().set("caret_style", "solid")
         # view.settings().set("caret_extra_width", 5)
@@ -80,24 +80,25 @@ class Buffer:
         self.view.add_regions("input", [reg])
         self.scroll_bottom()
 
-class TwUpCursor(sublime_plugin.TextCommand, Buffer):
+
+class TintUpCursor(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
         print("up")
 
 
-class TwDownCursor(sublime_plugin.TextCommand, Buffer):
+class TintDownCursor(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
         print("down")
 
 
-class TwClearCommand(sublime_plugin.TextCommand, Buffer):
+class TintClearCommand(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
         end = self.view.size()
         self.view.replace(edit, sublime.Region(0, end), "")
         self.prompt(edit)
 
 
-class TwRunLine(sublime_plugin.TextCommand, Buffer):
+class TintRunLine(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
         r = self.view.get_regions("input")[0]
         input = self.view.substr(r)[1:]
@@ -149,7 +150,7 @@ class BootTerminalCommand(sublime_plugin.TextCommand, Buffer):
         if startup_command:
             self.prompt(edit)
             self.replace_edit_buffer(edit, startup_command)
-            self.view.run_command("tw_run_line")
+            self.view.run_command("tint_run_line")
         else:
             if show_intro:
                 self.view.set_syntax_file("Packages/Markdown/Markdown.tmLanguage")

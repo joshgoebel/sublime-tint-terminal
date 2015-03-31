@@ -22,7 +22,7 @@ class SimpleShell():
         return self.exit()
 
     def clear(self):
-        self.view.run_command("tw_clear")
+        self.view.run_command("tint_clear")
 
     def exit(self):
         self.view.window().run_command("close_file")

@@ -15,4 +15,5 @@
 	The shell prompt you will be shown when using Tint.
 	*/
 	"prompt": "% "
+
 }

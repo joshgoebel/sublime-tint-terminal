@@ -18,5 +18,6 @@ class TintRunCustomCommand(sublime_plugin.WindowCommand):
         pass
 
     def go(self, cmd):
-        self.window.run_command("terminal_in_tab", {"cmd": cmd})
+        if cmd:
+            self.window.run_command("tint_new_terminal", {"cmd": cmd})
         # print(cmd)
