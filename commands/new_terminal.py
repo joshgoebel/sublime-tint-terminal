@@ -11,7 +11,6 @@ a real terminal.  There are a few caveats:
 
 - Interactive commands will not work (anything that requires input)
 - There is a 10 second timeout on all commands (configurable)
-- You're (currently) stuck in the projects root directory
 - Each command is discrete, this is not a real shell. (ex: you can't
   set/export ENV variables, etc.)
 
@@ -31,7 +30,7 @@ class TintNewTerminalCommand(sublime_plugin.WindowCommand):
         # view.settings().set("caret_style", "solid")
         # view.settings().set("caret_extra_width", 5)
         pwd = self.window.folders()[0]
-        view.settings().set("pwd", pwd)
+        view.settings().set("tint.pwd", pwd)
         if cmd:
             view.settings().set("tint.command", cmd)
         view.set_scratch(True)

@@ -23,7 +23,6 @@ Custom commands first open a new Tint terminal and then run the command you spec
 
  - no interactive commands (ie, no input from terminal)
  - piping should work just fine though (grep, etc.)
- - you can't change directories (yet)
  - doesn't work on Windows (currently)
  
 

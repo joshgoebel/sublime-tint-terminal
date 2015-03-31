@@ -36,10 +36,10 @@ class TintRunLine(sublime_plugin.TextCommand, Buffer):
         shell = SimpleShell(self.view)
         if shell.has_builtin(input):
             out, err = shell.builtin(input)
-            if not out:
+            if out is None:
                 return
         else:
-            pwd = self.view.settings().get("pwd")
+            pwd = self.view.settings().get("tint.pwd")
             out, err = CommandRunner(pwd).run(input)
 
         no_ansi = re.compile(r'\x1b[^mhlHB]+[mhlHB]')
