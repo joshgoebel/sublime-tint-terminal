@@ -23,6 +23,9 @@ class Watcher(sublime_plugin.EventListener):
             view.run_command("tint_wake_terminal")
 
     def on_selection_modified(self, view):
+        if not view.settings().get("tint.terminal"):
+            return
+
         sel = view.sel()[0]
         inp = view.get_regions("input")
         if inp and inp[0].contains(sel.a):
