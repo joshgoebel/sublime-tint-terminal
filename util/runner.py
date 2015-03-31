@@ -1,6 +1,8 @@
 import os
 import sublime
 import subprocess
+import threading
+import time
 
 
 class CommandRunner():
@@ -28,6 +30,12 @@ class CommandRunner():
         print(cmd)
         return cmd
 
+    def watch(self, process):
+        time.sleep(2)
+        if not process.poll():
+            process.kill()
+        # raise(BaseException)
+
     def run(self, string, stdin=None):
         command = self.build_command(string)
         startupinfo = None
@@ -46,6 +54,9 @@ class CommandRunner():
                              cwd=self.working_dir,
                              env=env,
                              startupinfo=startupinfo)
+        watcher = threading.Thread(target=self.watch, args=(p,))
+        watcher.start()
+
         stdout, stderr = p.communicate(stdin.encode(encoding="UTF-8") if stdin else None)
         stdout, stderr = stdout.decode(), stderr.decode()
 
