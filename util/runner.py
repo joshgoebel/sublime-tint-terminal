@@ -32,9 +32,8 @@ class CommandRunner():
 
     def watch(self, process):
         time.sleep(2)
-        if not process.poll():
+        if process.poll() == None:
             process.kill()
-        # raise(BaseException)
 
     def run(self, string, stdin=None):
         command = self.build_command(string)
@@ -44,8 +43,6 @@ class CommandRunner():
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
         env = os.environ
-        # env["TERM"] = "xterm-256color"
-        # env["TERM"] = "xterm"
 
         p = subprocess.Popen(command,
                              stdin=subprocess.PIPE,

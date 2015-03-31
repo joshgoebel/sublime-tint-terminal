@@ -8,6 +8,7 @@ import imp
 import sys
 
 imp.reload(sys.modules["TerminalWindow.util.runner"])
+imp.reload(sys.modules["TerminalWindow.util.shell"])
 #sublime.sublime_api.plugin_host_ready()
 
 PLUGIN_NAME = "TinT"
@@ -70,12 +71,14 @@ class TwRunLine(sublime_plugin.TextCommand, Buffer):
         r = self.view.get_regions("input")[0]
         input = self.view.substr(r)[1:]
 
+        end = self.view.size()
+        self.view.insert(edit, end, "\n")
+
         sublime.set_timeout_async(lambda: self.run_async(input))
 
     def run_async(self, input):
-
         # exit built-in
-        shell = Shell(self.view)
+        shell = SimpleShell(self.view)
         if shell.has_builtin(input):
             out, err = shell.builtin(input)
             if not out:
@@ -94,9 +97,6 @@ class TwRunLine(sublime_plugin.TextCommand, Buffer):
 
 class OutputCommand(sublime_plugin.TextCommand, Buffer):
     def run(self, edit, out="", err="" ):
-        end = self.view.size()
-        self.view.insert(edit, end, "\n")
-
         end = self.view.size()
         self.view.insert(edit, end, out)
         end = self.view.size()
