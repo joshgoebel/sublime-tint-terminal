@@ -15,7 +15,6 @@
             ]
 
     },
-
     {
         "keys": ["super+k"],
         "command": "tw_clear",

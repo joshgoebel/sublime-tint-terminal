@@ -21,5 +21,8 @@ class SimpleShell():
     def bye(self):
         return self.exit()
 
+    def clear(self):
+        self.view.run_command("tw_clear")
+
     def exit(self):
         self.view.window().run_command("close_file")

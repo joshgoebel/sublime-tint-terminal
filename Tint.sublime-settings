@@ -1,0 +1,18 @@
+{
+	/*
+	Determines whether to show the MOTD style introduction each time a
+	terminal is opened.
+	*/
+	"show_introduction": true,
+
+	/*
+	Tells Tint what shell it should be using so it knows how to
+	run commands with the best environment possible
+	*/
+	"shell": "zsh",
+
+	/*
+	The shell prompt you will be shown when using Tint.
+	*/
+	"prompt": "% "
+}

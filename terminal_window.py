@@ -11,10 +11,22 @@ imp.reload(sys.modules["TerminalWindow.util.runner"])
 imp.reload(sys.modules["TerminalWindow.util.shell"])
 #sublime.sublime_api.plugin_host_ready()
 
-PLUGIN_NAME = "TinT"
+PLUGIN_NAME = "Tint: Terminal"
 INTRO = """
 
-# Welcome to TinT.
+# Welcome to Terminal in a Tab (Tint for short).
+
+You can type commands at the Tint prompt just like you would if Tint were
+a real terminal.  There are a few caveats:
+
+- Interactive commands will not work (anything that requires input)
+- There is a 10 second timeout on all commands (configurable)
+- You're (currently) stuck in the projects root directory
+- Each command is discrete, this is not a real shell. (ex: you can't
+  set/export ENV variables, etc.)
+
+To hide this introduction edit the Tint settings and set
+`show_introduction` to false.
 
 """
 
@@ -26,6 +38,8 @@ class TerminalInTabCommand(sublime_plugin.WindowCommand):
         view.set_name(PLUGIN_NAME)
         view.settings().set("terminal_window", True)
         view.settings().set("line_numbers", False)
+        # view.settings().set("caret_style", "solid")
+        # view.settings().set("caret_extra_width", 5)
         pwd = self.window.folders()[0]
         view.settings().set("pwd", pwd)
         view.set_scratch(True)
@@ -41,13 +55,19 @@ class Buffer:
         self.view.insert(edit, end, "{}".format(PROMPT))
         self.reset_input_buffer()
 
+    def scroll_bottom(self):
+        # scroll to bottom of view
+        end = self.view.size()
+        h = self.view.viewport_extent()[1]
+        max = self.view.layout_extent()[1]
+        self.view.set_viewport_position((0,max-h+5))
+        # self.view.show(end)
+
     def reset_input_buffer(self):
         end = self.view.size()
         reg = sublime.Region(end-1, end+1)
         self.view.add_regions("input", [reg])
-        # scroll to bottom of view
-        self.view.show(end)
-
+        self.scroll_bottom()
 
 class TwUpCursor(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
@@ -62,7 +82,7 @@ class TwDownCursor(sublime_plugin.TextCommand, Buffer):
 class TwClearCommand(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
         end = self.view.size()
-        self.view.replace(edit, sublime.Region(0,end), "")
+        self.view.replace(edit, sublime.Region(0, end), "")
         self.prompt(edit)
 
 
@@ -89,14 +109,15 @@ class TwRunLine(sublime_plugin.TextCommand, Buffer):
 
         no_ansi = re.compile(r'\x1b[^mhlHB]+[mhlHB]')
         no_nroff = re.compile(r'.\x08')
-        out = no_ansi.sub('',out)
-        out = no_nroff.sub('',out)
+        out = no_ansi.sub('', out)
+        out = no_nroff.sub('', out)
 
         self.view.run_command("output", {"out": out, "err": err})
 
 
 class OutputCommand(sublime_plugin.TextCommand, Buffer):
-    def run(self, edit, out="", err="" ):
+    def run(self, edit, out="", err=""):
+        self.view.set_syntax_file("Packages/Text/Plain text.tmLanguage")
         end = self.view.size()
         self.view.insert(edit, end, out)
         end = self.view.size()
@@ -110,6 +131,6 @@ class OutputCommand(sublime_plugin.TextCommand, Buffer):
 class BootTerminalCommand(sublime_plugin.TextCommand, Buffer):
 
     def run(self, edit):
+        self.view.set_syntax_file("Packages/Markdown/Markdown.tmLanguage")
         self.view.insert(edit, 0, INTRO.lstrip())
         self.prompt(edit)
-

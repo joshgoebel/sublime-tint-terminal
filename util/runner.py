@@ -10,13 +10,10 @@ class CommandRunner():
         self.working_dir = working_dir
 
     def build_command(self, string):
-        settings = sublime.load_settings("TerminalWindow.sublime-settings")
+        settings = sublime.load_settings("Tint.sublime-settings")
         shell = settings.get("shell")
-        for k, v in os.environ.items():
-            print("{}: {}".format(k,v))
-        print(shell)
-        args = ()
-        prefix = ""
+        # for k, v in os.environ.items():
+        #     print("{}: {}".format(k,v))
         if shell == "zsh":
             args = ("-l", "-c")
             prefix = "source ~/.zshrc && "
@@ -24,6 +21,8 @@ class CommandRunner():
             args = ("-l", "-c")
             prefix = ""
         else:
+            args = ("-c")
+            prefix = ""
             pass
 
         cmd = (shell,) + args + (prefix + string, )
@@ -31,7 +30,7 @@ class CommandRunner():
         return cmd
 
     def watch(self, process):
-        time.sleep(2)
+        time.sleep(10)
         if process.poll() == None:
             process.kill()
 

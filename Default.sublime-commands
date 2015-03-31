@@ -1,6 +1,6 @@
 [
     {
-        "caption": "TinT: Terminal in Tab",
+        "caption": "Tint: New Terminal in Tab",
         "command": "terminal_in_tab"
     }
 ]
