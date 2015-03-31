@@ -1,3 +1,5 @@
+import sublime
+
 class SimpleShell():
     def __init__(self, view):
         self.view = view
@@ -14,6 +16,10 @@ class SimpleShell():
 
     def cd(self):
         return "You may not change directories.\n"
+
+    # easter egg
+    def whoareyou(self):
+        return "I'm Sublime {}. Thanks for asking.\n".format(sublime.version())
 
     def chdir(self):
         return self.cd()
