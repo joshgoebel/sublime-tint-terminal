@@ -2,5 +2,17 @@
     {
         "caption": "Tint: New Terminal in Tab",
         "command": "terminal_in_tab"
+    },
+    {
+    	"caption": "Tint: Run Command",
+    	"command": "tint_run_custom",
+    	"args": { "cached": true }
+    },
+    {
+    	"caption": "Tint: git status",
+    	"command": "tint_run_custom",
+    	"args": {
+    		"cmd": "git status" }
     }
+
 ]

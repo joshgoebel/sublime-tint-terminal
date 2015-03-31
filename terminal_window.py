@@ -3,12 +3,13 @@ import sublime
 import sublime_plugin
 from .util.shell import *
 from .util.runner import *
+from .commands.custom import *
 
 import imp
 import sys
 
-imp.reload(sys.modules["TerminalWindow.util.runner"])
-imp.reload(sys.modules["TerminalWindow.util.shell"])
+# imp.reload(sys.modules["Tint.util.runner"])
+# imp.reload(sys.modules["Tint.util.shell"])
 #sublime.sublime_api.plugin_host_ready()
 
 PLUGIN_NAME = "Tint: Terminal"
@@ -33,7 +34,7 @@ To hide this introduction edit the Tint settings and set
 
 class TerminalInTabCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
+    def run(self, cmd=None):
         view = self.window.new_file()
         view.set_name(PLUGIN_NAME)
         view.settings().set("terminal_window", True)
@@ -42,18 +43,28 @@ class TerminalInTabCommand(sublime_plugin.WindowCommand):
         # view.settings().set("caret_extra_width", 5)
         pwd = self.window.folders()[0]
         view.settings().set("pwd", pwd)
+        if cmd:
+            view.settings().set("tint.command", cmd)
         view.set_scratch(True)
         view.run_command("boot_terminal")
 
 
 class Buffer:
     def prompt(self, edit):
-        settings = sublime.load_settings("TerminalWindow.sublime-settings")
+        settings = sublime.load_settings("Tint.sublime-settings")
         PROMPT = settings.get("prompt", "% ")
 
         end = self.view.size()
         self.view.insert(edit, end, "{}".format(PROMPT))
         self.reset_input_buffer()
+
+    def replace_edit_buffer(self, edit, s):
+        inp = self.view.get_regions("input")[0]
+        self.view.replace(edit, inp, " " + s)
+
+        end = self.view.size()
+        reg = sublime.Region(inp.a, end+1)
+        self.view.add_regions("input", [reg])
 
     def scroll_bottom(self):
         # scroll to bottom of view
@@ -131,6 +142,16 @@ class OutputCommand(sublime_plugin.TextCommand, Buffer):
 class BootTerminalCommand(sublime_plugin.TextCommand, Buffer):
 
     def run(self, edit):
-        self.view.set_syntax_file("Packages/Markdown/Markdown.tmLanguage")
-        self.view.insert(edit, 0, INTRO.lstrip())
-        self.prompt(edit)
+        startup_command = self.view.settings().get("tint.command")
+        settings = sublime.load_settings("Tint.sublime-settings")
+        show_intro = settings.get("show_introduction")
+
+        if startup_command:
+            self.prompt(edit)
+            self.replace_edit_buffer(edit, startup_command)
+            self.view.run_command("tw_run_line")
+        else:
+            if show_intro:
+                self.view.set_syntax_file("Packages/Markdown/Markdown.tmLanguage")
+                self.view.insert(edit, 0, INTRO.lstrip())
+            self.prompt(edit)
