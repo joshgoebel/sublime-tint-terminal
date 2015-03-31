@@ -10,13 +10,10 @@ import sys
 imp.reload(sys.modules["TerminalWindow.util.runner"])
 #sublime.sublime_api.plugin_host_ready()
 
-PLUGIN_NAME = "TINT"
-settings = sublime.load_settings("TerminalWindow.sublime-settings")
-PROMPT = settings.get("prompt", "% ")
-
+PLUGIN_NAME = "TinT"
 INTRO = """
 
-# Welcome to TINT.
+# Welcome to TinT.
 
 """
 
