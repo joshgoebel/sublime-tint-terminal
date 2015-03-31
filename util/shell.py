@@ -1,6 +1,8 @@
 import sublime
 import os
 
+RESERVED = ["builtin", "has_builtin"]
+
 
 class SimpleShell():
     def __init__(self, view):
@@ -15,6 +17,8 @@ class SimpleShell():
         cmd = string.split(" ")[0]
         args = string.split(" ")[1:]
         fn = getattr(self, cmd, None)
+        if cmd in RESERVED:
+            return ("command not found: {}\n".format(cmd), "")
         return (fn(args), "")
 
     def cd(self, args):
