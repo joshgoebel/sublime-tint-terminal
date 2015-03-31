@@ -27,15 +27,6 @@
 
     },
     {
-        "keys": ["super+k"],
-        "command": "tint_clear",
-        "context": [
-            { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
-            { "key": "setting.tint.entry", "operator": "equal", "operand": true }
-            ]
-
-    },
-    {
         "keys": ["enter"],
         "command": "tint_run_line",
         "context": [
