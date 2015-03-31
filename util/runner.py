@@ -1,4 +1,5 @@
 import os
+import sublime
 import subprocess
 
 
@@ -6,9 +7,29 @@ class CommandRunner():
     def __init__(self, working_dir):
         self.working_dir = working_dir
 
+    def build_command(self, string):
+        settings = sublime.load_settings("TerminalWindow.sublime-settings")
+        shell = settings.get("shell")
+        for k, v in os.environ.items():
+            print("{}: {}".format(k,v))
+        print(shell)
+        args = ()
+        prefix = ""
+        if shell == "zsh":
+            args = ("-l", "-c")
+            prefix = "source ~/.zshrc && "
+        elif shell == "bash":
+            args = ("-l", "-c")
+            prefix = ""
+        else:
+            pass
+
+        cmd = (shell,) + args + (prefix + string, )
+        print(cmd)
+        return cmd
+
     def run(self, string, stdin=None):
-        string = "source ~/.zshrc && " + string
-        command = ("zsh", "-l", "-c", string)
+        command = self.build_command(string)
         startupinfo = None
         if os.name == "nt":
             startupinfo = subprocess.STARTUPINFO()

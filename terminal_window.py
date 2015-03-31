@@ -1,36 +1,44 @@
 import re
 import sublime
 import sublime_plugin
+from .util.shell import *
 from .util.runner import *
 
-PROMPT = "S:TINT % "
-PLUGIN_NAME = "S:TINT"
+import imp
+import sys
 
+imp.reload(sys.modules["TerminalWindow.util.runner"])
+#sublime.sublime_api.plugin_host_ready()
+
+PLUGIN_NAME = "TINT"
+settings = sublime.load_settings("TerminalWindow.sublime-settings")
+PROMPT = settings.get("prompt", "% ")
+
+INTRO = """
+
+# Welcome to TINT.
+
+"""
 
 
 class TerminalInTabCommand(sublime_plugin.WindowCommand):
+
     def run(self):
         view = self.window.new_file()
-        view.run_command("boot_terminal")
         view.set_name(PLUGIN_NAME)
         view.settings().set("terminal_window", True)
+        view.settings().set("line_numbers", False)
         pwd = self.window.folders()[0]
         view.settings().set("pwd", pwd)
         view.set_scratch(True)
-
-
-class TwUpCursor(sublime_plugin.TextCommand, Buffer):
-    def run(self, edit):
-        print("up")
-
-
-class TwDownCursor(sublime_plugin.TextCommand, Buffer):
-    def run(self, edit):
-        print("down")
+        view.run_command("boot_terminal")
 
 
 class Buffer:
     def prompt(self, edit):
+        settings = sublime.load_settings("TerminalWindow.sublime-settings")
+        PROMPT = settings.get("prompt", "% ")
+
         end = self.view.size()
         self.view.insert(edit, end, "{}".format(PROMPT))
         self.reset_input_buffer()
@@ -41,6 +49,16 @@ class Buffer:
         self.view.add_regions("input", [reg])
         # scroll to bottom of view
         self.view.show(end)
+
+
+class TwUpCursor(sublime_plugin.TextCommand, Buffer):
+    def run(self, edit):
+        print("up")
+
+
+class TwDownCursor(sublime_plugin.TextCommand, Buffer):
+    def run(self, edit):
+        print("down")
 
 
 class TwClearCommand(sublime_plugin.TextCommand, Buffer):
@@ -58,8 +76,15 @@ class TwRunLine(sublime_plugin.TextCommand, Buffer):
         end = self.view.size()
         self.view.insert(edit, end, "\n")
 
-        pwd = self.view.settings().get("pwd")
-        out, err = CommandRunner(pwd).run(input)
+        # exit built-in
+        shell = Shell(self.view)
+        if shell.has_builtin(input):
+            out, err = shell.builtin(input)
+            if not out:
+                return
+        else:
+            pwd = self.view.settings().get("pwd")
+            out, err = CommandRunner(pwd).run(input)
 
         no_ansi = re.compile(r'\x1b[^mhlHB]+[mhlHB]')
         no_nroff = re.compile(r'.\x08')
@@ -79,5 +104,6 @@ class TwRunLine(sublime_plugin.TextCommand, Buffer):
 class BootTerminalCommand(sublime_plugin.TextCommand, Buffer):
 
     def run(self, edit):
+        self.view.insert(edit, 0, INTRO.lstrip())
         self.prompt(edit)
 
