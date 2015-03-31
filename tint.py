@@ -10,6 +10,15 @@ from .commands import *
 # sublime.sublime_api.plugin_host_ready()
 
 
+def boot():
+    if sublime.active_window().active_view():
+        sublime.active_window().active_view().run_command("tint_wake_terminal")
+
+
+def plugin_loaded():
+    sublime.set_timeout_async(lambda: boot())
+
+
 class TintRunLine(sublime_plugin.TextCommand, Buffer):
     def run(self, edit):
         r = self.view.get_regions("input")[0]

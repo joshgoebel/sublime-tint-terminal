@@ -8,14 +8,15 @@ class TintReplaceInput(sublime_plugin.TextCommand, Buffer):
         self.replace_edit_buffer(edit, cmd)
 
 
-class TintUpCursor(sublime_plugin.TextCommand, Buffer):
+class TintUpCursor(sublime_plugin.TextCommand):
     def run(self, edit):
         self.edit = edit
         self.items = [[item] for item in CommandHistory(self.view).list()]
-        self.view.window().show_quick_panel(self.items,
+        self.view.window().show_quick_panel(
+            self.items,
             self.go,
             sublime.MONOSPACE_FONT,
-            len(items)-1,
+            len(self.items)-1,
             self.replace
             )
         print("up")

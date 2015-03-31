@@ -38,6 +38,14 @@ class TintNewTerminalCommand(sublime_plugin.WindowCommand):
         view.run_command("tint_boot_terminal")
 
 
+class TintWakeTerminalCommand(sublime_plugin.TextCommand, Buffer):
+    def run(self, edit):
+        if not self.view.settings().get("tint.terminal"):
+            return
+        if not self.view.get_regions("input"):
+            self.prompt(edit)
+
+
 class TintBootTerminalCommand(sublime_plugin.TextCommand, Buffer):
 
     def run(self, edit):
