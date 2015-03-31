@@ -16,7 +16,7 @@ class CommandRunner():
         #     print("{}: {}".format(k,v))
         if shell == "zsh":
             args = ("-l", "-c")
-            prefix = "source ~/.zshrc && "
+            prefix = "([[ -f ~/.zshrc ]] && source ~/.zshrc); "
         elif shell == "bash":
             args = ("-l", "-c")
             prefix = ""
