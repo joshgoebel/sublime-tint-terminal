@@ -3,7 +3,8 @@
         "keys": ["up"],
         "command": "tint_up_cursor",
         "context": [
-            { "key": "setting.tint.terminal", "operator": "equal", "operand": true }
+            { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
+            { "key": "setting.tint.entry", "operator": "equal", "operand": true },
             ]
 
     },
@@ -11,7 +12,17 @@
         "keys": ["down"],
         "command": "tint_down_cursor",
         "context": [
-            { "key": "setting.tint.terminal", "operator": "equal", "operand": true }
+            { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
+            { "key": "setting.tint.entry", "operator": "equal", "operand": true },
+            ]
+
+    },
+    {
+        "keys": ["ctrl+a"],
+        "command": "tint_begin_line",
+        "context": [
+            { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
+            { "key": "setting.tint.entry", "operator": "equal", "operand": true },
             ]
 
     },
@@ -19,7 +30,8 @@
         "keys": ["super+k"],
         "command": "tint_clear",
         "context": [
-            { "key": "setting.tint.terminal", "operator": "equal", "operand": true }
+            { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
+            { "key": "setting.tint.entry", "operator": "equal", "operand": true }
             ]
 
     },
@@ -27,8 +39,8 @@
         "keys": ["enter"],
         "command": "tint_run_line",
         "context": [
-            { "key": "setting.tint.terminal", "operator": "equal", "operand": true }
-            // { "key": "setting.git_savvy.inline_diff_view", "operator": "equal", "operand": true }
+            { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
+            { "key": "setting.tint.entry", "operator": "equal", "operand": true },
         ]
     }
 ]

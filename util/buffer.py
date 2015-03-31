@@ -1,7 +1,21 @@
 import sublime
+import sublime_plugin
 
 
-class Buffer:
+class Watcher(sublime_plugin.EventListener):
+    def on_selection_modified(self, view):
+        sel = view.sel()[0]
+        inp = view.get_regions("input")
+        if inp and inp[0].contains(sel.a):
+            print("data entry")
+            view.settings().set("tint.entry", True)
+        else:
+            print("data entry: NO")
+            view.settings().set("tint.entry", False)
+
+
+class Buffer():
+
     def prompt(self, edit):
         settings = sublime.load_settings("Tint.sublime-settings")
         PROMPT = settings.get("prompt", "% ")
@@ -23,7 +37,7 @@ class Buffer:
         end = self.view.size()
         h = self.view.viewport_extent()[1]
         max = self.view.layout_extent()[1]
-        self.view.set_viewport_position((0,max-h+5))
+        self.view.set_viewport_position((0, max-h+5))
         # self.view.show(end)
 
     def reset_input_buffer(self):
