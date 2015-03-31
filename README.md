@@ -1,5 +1,7 @@
 # Terminal in a Tab (Tint for short)
 
+![Example of usage](https://dl.dropboxusercontent.com/u/3144563/uM99QOYwsQ.gif)
+
 ## Why?
 
 First, I wanted to see if it could be done.  Then it started becoming useful.
