@@ -2,6 +2,21 @@ import sublime
 import sublime_plugin
 
 
+class CommandHistory():
+    def __init__(self, view):
+        self._view = view
+        self._history = view.settings().get("tint.history") or []
+
+    def add(self, cmd):
+        previous = self._history[-1] if self._history else None
+        if previous != cmd:
+            self._history.append(cmd)
+            self._view.settings().set("tint.history", self._history)
+
+    def list(self):
+        return self._history
+
+
 class Watcher(sublime_plugin.EventListener):
     def on_selection_modified(self, view):
         sel = view.sel()[0]

@@ -19,7 +19,7 @@
     },
     {
         "keys": ["ctrl+a"],
-        "command": "tint_begin_line",
+        "command": "tint_go_begin_line",
         "context": [
             { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
             { "key": "setting.tint.entry", "operator": "equal", "operand": true },

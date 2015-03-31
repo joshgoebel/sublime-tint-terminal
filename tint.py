@@ -15,6 +15,8 @@ class TintRunLine(sublime_plugin.TextCommand, Buffer):
         r = self.view.get_regions("input")[0]
         input = self.view.substr(r)[1:]
 
+        CommandHistory(self.view).add(input)
+
         end = self.view.size()
         self.view.insert(edit, end, "\n")
 
