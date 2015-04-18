@@ -1,3 +1,4 @@
+import os
 import sublime_plugin
 from ..util.buffer import *
 
@@ -29,12 +30,22 @@ class TintNewTerminalCommand(sublime_plugin.WindowCommand):
         view.settings().set("line_numbers", False)
         # view.settings().set("caret_style", "solid")
         # view.settings().set("caret_extra_width", 5)
-        pwd = self.window.folders()[0]
-        view.settings().set("tint.pwd", pwd)
+        view.settings().set("tint.pwd", self.get_pwd())
         if cmd:
             view.settings().set("tint.command", cmd)
         view.set_scratch(True)
         view.run_command("tint_boot_terminal")
+
+    def get_pwd(self):
+        folders = self.window.folders()
+        if folders:
+            return folders[0]
+
+        # first try users home folder
+        if os.environ['HOME']:
+            return os.environ['HOME']
+        else:  # otherwise fallback to `pwd`
+            return os.getcwd()
 
 
 class TintWakeTerminalCommand(sublime_plugin.TextCommand, Buffer):
