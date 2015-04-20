@@ -9,7 +9,7 @@
 	Tells Tint what shell it should be using so it knows how to
 	run commands with the best environment possible
 	*/
-	"shell": "zsh",
+	"shell": "bash",
 
 	/*
 	The shell prompt you will be shown when using Tint.
