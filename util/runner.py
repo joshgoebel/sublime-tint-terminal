@@ -43,7 +43,11 @@ class CommandRunner():
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
-        env = os.environ
+        env = os.environ.copy()
+
+        settings = sublime.load_settings("Tint.sublime-settings")
+        my_env = settings.get("env")
+        env.update(my_env)
 
         try:
             p = subprocess.Popen(command,

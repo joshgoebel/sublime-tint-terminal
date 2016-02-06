@@ -14,6 +14,11 @@
 	/*
 	The shell prompt you will be shown when using Tint.
 	*/
-	"prompt": "% "
+	"prompt": "% ",
+
+	/*
+	Any environment variables you'd like to override.
+	*/
+	"env": {}
 
 }
