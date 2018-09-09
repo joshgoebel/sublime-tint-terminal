@@ -52,7 +52,9 @@ class TintRunLine(sublime_plugin.TextCommand, Buffer):
 
 class TintPrintOutputCommand(sublime_plugin.TextCommand, Buffer):
     def run(self, edit, out="", err=""):
-        self.view.set_syntax_file("Packages/Text/Plain text.tmLanguage")
+        r_markdown = re.compile(r'markdown',re.I)
+        if r_markdown.search(self.view.settings().get('syntax')):
+            self.view.set_syntax_file("Packages/Text/Plain text.tmLanguage")
         end = self.view.size()
         self.view.insert(edit, end, out)
         end = self.view.size()
