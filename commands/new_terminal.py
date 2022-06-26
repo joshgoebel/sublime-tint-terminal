@@ -3,7 +3,7 @@ import sublime
 import sublime_plugin
 from ..util.buffer import *
 
-PLUGIN_NAME = "Tint: Terminal"
+PLUGIN_NAME = "Tint | Terminal"
 INTRO = """
 
 # Welcome to Tint, the lightweight terminal in a tab
@@ -26,10 +26,11 @@ class TintNewTerminalCommand(sublime_plugin.WindowCommand):
 
     def run(self, cmd=None, split=False):
         flags = 0
-        # if split:
-        #     print("splitting")
-        #     flags = sublime.ADD_TO_SELECTION
         view = self.window.new_file(flags)
+        # TODO: why does sublime.ADD_TO_SELECTION work?
+        if split:
+            self.window.run_command("select_to_left")
+            self.window.focus_view(view)
         view.set_name(PLUGIN_NAME)
         view.settings().set("tint.terminal", True)
         view.settings().set("line_numbers", False)
