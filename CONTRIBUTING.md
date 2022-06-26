@@ -1,6 +1,6 @@
-# Contribute
+# Contributing
 
-If you're interested in adding features, reporting/fixing bugs, or just discussing the future of Tint, this is the place to start.  Please feel free to reach out if you have questions or comments by opening an [issue](https://github.com/yyyc514/Tint/issues).
+If you're interested in adding features, reporting/fixing bugs, or just discussing the future of Tint, this is the place to start.  Please feel free to reach out if you have questions or comments by [opening an issue](https://github.com/joshgoebel/sublime-tint-terminal/issues).
 
 
 ## Adding new features
@@ -22,7 +22,7 @@ Some other things to remember:
 Please be patient, sometimes I like to live my life instead of hacking on my code.  I promise to reply!
 
 
-# Bugs
+## Reporting Bugs
 
 If you encounter a bug, please check for an open issue that already captures the problem you've run into.  If it doesn't exist yet, create it!
 
@@ -37,10 +37,11 @@ Please include the following information when filing a bug:
 If you're interested in tackling a bug, please say so and I can assign it to you.
 
 
-# Documentation
+## Documentation
 
 If you make changes, please remember to update the user documentation to reflect the new behavior.
 
-# Thank You
 
-Thanks to [divmain](https://github.com/divmain/) for a great template for a CONTRIBUTE file.  This file is almost exactly the same as GitSavvy's.  
+## Thank You
+
+Thanks to [divmain](https://github.com/divmain/) for a great template for a CONTRIBUTE file.  This file is almost exactly the same as GitSavvy's.
