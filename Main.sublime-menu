@@ -11,13 +11,12 @@
             "caption": "Tint (Terminal in a Tab)",
             "children": [
               {
-                "command": "open_file",
-                "args": {"file": "${packages}/Tint/Tint.sublime-settings"},
-                "caption": "Settings - Default"
-              }, {
-                "command": "open_file",
-                "args": {"file": "${packages}/User/Tint.sublime-settings"},
-                "caption": "Settings – User"
+                "caption": "Settings",
+                "command": "edit_settings",
+                "args": {
+                    "base_file": "${packages}/Tint/Tint.sublime-settings",
+                    "default": "{\n\t$0\n}\n"
+                }
               }
             ]
           }
