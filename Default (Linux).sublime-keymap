@@ -1,6 +1,6 @@
 [
     {
-        "keys": ["super+k"],
+        "keys": ["ctrl+k"],
         "command": "tint_clear",
         "context": [
             { "key": "setting.tint.terminal", "operator": "equal", "operand": true },
