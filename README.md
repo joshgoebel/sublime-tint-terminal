@@ -1,7 +1,7 @@
 # Tint, a lightweight terminal in a tab
 
-![](https://badgen.net/badge/version/0.1.5/blue)
-![](https://badgen.net/badge/sublime/3+/green)
+![](https://badgen.net/badge/version/0.2.0/blue)
+![](https://badgen.net/badge/sublime/4/green)
 ![](https://packagecontrol.herokuapp.com/downloads/Tint.svg)
 ![](https://badgen.net/badge/license/MIT/cyan)
 
