@@ -8,13 +8,13 @@
         "id": "package-settings",
         "children": [
           {
-            "caption": "Tint (Terminal in a Tab)",
+            "caption": "Tint Terminal [in a Tab]",
             "children": [
               {
                 "caption": "Settings",
                 "command": "edit_settings",
                 "args": {
-                    "base_file": "${packages}/Tint/Tint.sublime-settings",
+                    "base_file": "${packages}/Tint Terminal/Tint.sublime-settings",
                     "default": "{\n\t$0\n}\n"
                 }
               }
