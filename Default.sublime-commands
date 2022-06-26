@@ -3,6 +3,13 @@
         "caption": "Tint: New Terminal in Tab",
         "command": "tint_new_terminal"
     },
+    // {
+    //     "caption": "Tint: New Terminal in Tab (split)",
+    //     "command": "tint_new_terminal",
+    //     "args": {
+    //         "split": true
+    //     }
+    // },
     {
     	"caption": "Tint: Run Command",
     	"command": "tint_run_custom"

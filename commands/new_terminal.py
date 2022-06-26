@@ -24,8 +24,12 @@ To hide this intro edit the Tint settings and set
 
 class TintNewTerminalCommand(sublime_plugin.WindowCommand):
 
-    def run(self, cmd=None):
-        view = self.window.new_file()
+    def run(self, cmd=None, split=False):
+        flags = 0
+        # if split:
+        #     print("splitting")
+        #     flags = sublime.ADD_TO_SELECTION
+        view = self.window.new_file(flags)
         view.set_name(PLUGIN_NAME)
         view.settings().set("tint.terminal", True)
         view.settings().set("line_numbers", False)
