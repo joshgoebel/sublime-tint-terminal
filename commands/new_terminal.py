@@ -1,22 +1,23 @@
 import os
+import sublime
 import sublime_plugin
 from ..util.buffer import *
 
 PLUGIN_NAME = "Tint: Terminal"
 INTRO = """
 
-# Welcome to Terminal in a Tab (Tint for short).
+# Welcome to Tint, the lightweight terminal in a tab
 
-You can type commands at the Tint prompt just like you would if Tint were
-a real terminal.  There are a few caveats:
+You can type commands at a Tint prompt just like you would at a
+real terminal.  There are a few caveats:
 
-- Interactive commands will not work (anything that requires input)
-- There is a 10 second timeout on all commands (configurable)
-- Each command is discrete, this is not a real shell. (ex: you can't
-  set/export ENV variables, etc.)
+- Interactive commands will not work
+- There is a 10 second timeout on commands (configurable)
+- Each command is discrete, this is not a real shell.
+  - you can't export ENV variables, etc.
 
-To hide this introduction edit the Tint settings and set
-`show_introduction` to false.
+To hide this intro edit the Tint settings and set
+`show_introduction` to `false`.
 
 """
 
